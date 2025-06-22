@@ -2,9 +2,12 @@ from LogLevel import LogLevel
 from Destination import Destination
 from ConsoleDestination import ConsoleDestination
 from LogMessage import LogMessage
+import threading
 
 class Logger:
     _instance = None
+    _lock = threading.Lock()
+
     def __init__(self):
         if Logger._instance is not None:
             raise Exception("This should be a singleton!")
@@ -24,7 +27,6 @@ class Logger:
             raise Exception(f"Log level {name} is not in available log levels!")
         self.level = name
 
-
     def setDestination(self, destination: Destination):
         self.destination = destination
 
@@ -34,5 +36,7 @@ class Logger:
     def log(self, msg: LogMessage):
         if LogLevel._dictOfLevels[msg.level] < LogLevel._dictOfLevels[self.level]:
             return
-        self.destination.append(str(msg))
+        
+        with Logger._lock:
+            self.destination.append(str(msg))
     
