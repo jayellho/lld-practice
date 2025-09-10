@@ -1,0 +1,57 @@
+Requirements:
+- Users can post questions, answer questions, and comment on questions and answers.
+- Users can vote on questions and answers.
+- Questions should have tags associated with them.
+- Users can search for questions based on keywords, tags or user profiles.
+- System - assign reputation scores to users based on activity and quality of contributions.
+- System - handle concurrent access and ensure data consistency.
+
+
+Entities:
+- ActivityManager
+    - Attributes:
+        - userId
+        - activityId
+        - tags
+        - rating
+    - Functions:
+        - createObject() << creates the question, answer
+- Tags
+    - Attributes:
+        - questionId
+        - tagName
+        
+- Users
+    - Attributes:
+        - id
+        - username
+        - reputationScore
+    
+    - Functions:
+        - postQuestions()
+        - answerQuestions()
+        - comment()
+        - vote()
+        - search()
+
+- Questions
+    - Attributes:
+        - questionId
+        - tags
+        - keywords
+        - rating
+        - associatedAnswers
+- Answers
+    - tags
+    - questionId
+    - rating
+
+- StackOverflow
+    - Attributes:
+        - Questions
+        - Users
+        - Answers
+    - Functions:
+        - computeReputationScores()
+        - createUsers()
+        - 

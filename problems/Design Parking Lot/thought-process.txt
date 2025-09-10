@@ -1,0 +1,50 @@
+
+- What interviewer is looking for:
+    - Requirements gathering; how to scope down the problem to be able to solve within 30 to 45 minutes.
+    - System design, especially OOD skills
+        - How to split into components and classes.
+        - OOD concepts - abstraction, encapsulation, inheritance, polymorphism.
+        - Design patterns - best practices for OOD.
+    - Sometimes, concurrency requirements.
+    - Problem solving
+    - NOT related to distributed system design unless specifically mentioned; you should try to scope down the problem.
+    
+1. Clarify Requirements
+- Huge parking lots (10,000 to 30,000 lots).
+- 4 entrances and 4 exits.
+- Customers collect tickets at entrance; parking spot assigned here.
+- Parking spot should be nearest to entrance.
+- Limit / Capacity of 30,000.
+- Different types of parking spots - handicapped, compact cars, large cars, motorcycles.
+- Hourly parking.
+- Can pay with cash and credit cards.
+- Monitoring system - how many cars entering and exiting etc.
+- Should be able to extend parking lot for other uses.
+======
+- Enter a lot and receive an assigned spot upon entry.
+- Exit a lot and release their spot upon exit.
+- How many available spots availble in the lots of varying sizes (big, medium, small). Only big in big, small in small and medium in medium.
+
+2. Design
+- Set parking garage to be an interface - there may be many different possible implementations of how we may store our spots and how we may assign a spot to an incoming car.
+- Methods of parking garage interface:
+    - Enter (carSize, entryNumber, licensePlate)
+    - Exit (carSize, entryNumber, licensePlate)
+    - GetNumSpots ()
+- Other classes? 
+    - Might not need vehicle class because don't really need to maintain state. 
+    - But might need to have a ParkingSpot class to maintain state corresponding to a single parking spot.
+
+3. Classes
+- Parking Spot class:
+    - Attributes: size, name, distanceToEntrances
+
+4. Possible parking garage implementations:
+    - Best algorithmic complexity: 
+        - all open spots stay in a queue, filled as they are popped from the queue and pushed back into the queue once vacated
+        - O(1)
+    - Better for users in minimizing distance traveled:
+        - Maintain priority queues for each size and entrance combo of all parking spots, and assign spots with min dist. from entrance.
+        - Make sure to remove spot from other priority queues that it may be in.
+        - Can improve algo complexity by 'sharding' parking lot and maintaining a zone per entrance so we don't have to remove arbitrary areas in min-heap.
+        
