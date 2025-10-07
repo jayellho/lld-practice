@@ -9,26 +9,20 @@ class PaymentStrategyContext():
     def __init__(self, strategy: PaymentStrategy) -> None:
         self._strategy = strategy
     
-
     @property
     def strategy(self) -> PaymentStrategy:
         return self._strategy
     
-
-
 class PaymentStrategy(ABC):
     @abstractmethod
     def calculate_payment(self, vehicle: Vehicle, ticket: Ticket) -> float:
         pass
-
-
 
 class VehicleBasedPaymentStrategy(PaymentStrategy):
     def calculate_payment(self, vehicle: Vehicle, ticket: Ticket) -> float:
         duration = ticket.exit_time - ticket.entry_time
         hours = duration / 3600
         return vehicle.base_rate() * hours
-
 
 class FlatRatePaymentStrategy(PaymentStrategy):
     def calculate_payment(self, vehicle, ticket):
